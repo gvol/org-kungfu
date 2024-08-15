@@ -518,7 +518,7 @@ sub ok_update1page(@) {
     }
 
     if (not $quietly) {
-        System("of ${ok_wikiurl}/pages/viewpage.action?pageId=${page_id}");
+        System("open ${ok_wikiurl}/pages/viewpage.action?pageId=${page_id}");
         system("git add .; git commit --allow-empty -m 'save to git after upload to confluence'");
     }
 }
@@ -740,7 +740,7 @@ sub ok_edit_html_with_org(@) {
     if ($update_org) {
         System("(echo '#+OPTIONS: toc:nil num:nil'; pandoc --wrap=none -f html -t org content.html | perl -pe 's,\\\\_,_,g') > content.org");
     } else {
-        system("bhj-notify 'ok' 'No need to update the org file'");
+        # system("bhj-notify 'ok' 'No need to update the org file'");
     }
 
     System("emacsclient content.org 1>&2");
@@ -756,7 +756,7 @@ sub ok_edit_html_with_org(@) {
            (prog1
                (buffer-substring-no-properties (point-min) (point-max))
              (kill-buffer)))))
-     
+
      (defun org-kungfu--export-to-html (file)
        (with-temp-buffer
          (insert-file file)
@@ -769,7 +769,7 @@ sub ok_edit_html_with_org(@) {
            (when (fboundp 'org2html-emojify)
              (org2html-emojify))
            (write-file html_file))))
-     
+
      (defun org-kungfu--export-to-buffer (file buffer)
        (with-temp-buffer
          (insert-file file)
@@ -778,7 +778,7 @@ sub ok_edit_html_with_org(@) {
            (with-current-buffer buffer
              (delete-region (point-min) (point-max))
              (insert html_str)))))
-     
+
      (defun org-kungfu-get-section-anchor ()
        (interactive)
        (let* ((page-title (shell-command-to-string "cat page-title.txt"))
